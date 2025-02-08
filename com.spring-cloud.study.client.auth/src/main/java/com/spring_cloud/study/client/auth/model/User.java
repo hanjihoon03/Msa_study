@@ -21,4 +21,7 @@ public class User {
     private String password;
     private UserRoleEnum userRoleEnum;
 
+    public void encodeUserPassword(String password) {
+        this.password = password;
+    }
 }

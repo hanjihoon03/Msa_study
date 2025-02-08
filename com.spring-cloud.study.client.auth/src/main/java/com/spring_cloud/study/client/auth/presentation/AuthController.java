@@ -15,13 +15,13 @@ public class AuthController {
     private final UserService userService;
 
 
-    @GetMapping("/signIn")
+    @PostMapping("/signIn")
     public ResponseEntity<?> signInCreateAuthenticationToken(@RequestBody SignInRequest signInRequest) {
         String token = userService.signInCreateAccessToken(signInRequest);
         return ResponseEntity.ok(token);
     }
 
-    @GetMapping("signUp")
+    @PostMapping("signUp")
     public ResponseEntity<?> signUp(@RequestBody User user) {
         User signUpUser = userService.signUp(user);
         return ResponseEntity.ok(signUpUser);

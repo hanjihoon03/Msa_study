@@ -5,6 +5,8 @@ import com.spring_cloud.study.client.auth.model.UserRoleEnum;
 import com.spring_cloud.study.client.auth.model.dto.SignInRequest;
 import com.spring_cloud.study.client.auth.model.repository.UserRepository;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,7 +16,6 @@ import javax.crypto.SecretKey;
 import java.util.Date;
 
 @Service
-@RequiredArgsConstructor
 public class UserService {
 
     @Value("${spring.application.name}")
@@ -28,6 +29,14 @@ public class UserService {
     private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
+
+    public UserService(@Value("${service.jwt.secret-key}") String secretKey,
+                       UserRepository userRepository,
+                       PasswordEncoder passwordEncoder) {
+        this.secretKey = Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(secretKey));
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public User signUp(User user) {
         user.encodeUserPassword(passwordEncoder.encode(user.getPassword()));

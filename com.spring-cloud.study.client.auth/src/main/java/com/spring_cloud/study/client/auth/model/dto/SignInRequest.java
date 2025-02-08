@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SignInRequest {
 
+    //username이 유니크 값이라는 전제
     private String username;
     private String password;
 }

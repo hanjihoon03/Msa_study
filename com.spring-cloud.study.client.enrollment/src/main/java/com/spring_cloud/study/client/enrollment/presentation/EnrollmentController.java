@@ -30,26 +30,30 @@ public class EnrollmentController {
                                                         Pageable pageable,
                                                         @RequestHeader(value = "X-User_Id") Long userId,
                                                         @RequestHeader(value = "X-role") String role) {
-        return enrollmentService.searchEnrollment(enrollmentSearchDto, pageable);
+        return enrollmentService.searchEnrollment(enrollmentSearchDto, pageable, userId);
     }
 
     @GetMapping("/{enrollmentId}")
-    public EnrollmentResponseDto findByEnrollmentId() {
-        return null;
+    public EnrollmentResponseDto findByEnrollmentId(@PathVariable Long enrollmentId) {
+        return enrollmentService.findByEnrollmentId(enrollmentId);
     }
 
     @PutMapping("/{enrollmentId}")
-    public EnrollmentResponseDto updateEnrollment() {
-        return null;
+    public EnrollmentResponseDto updateEnrollment(@PathVariable Long enrollmentId,
+                                                  @RequestBody EnrollmentRequestDto enrollmentRequestDto,
+                                                  @RequestHeader(value = "X-User_Id") Long userId,
+                                                  @RequestHeader(value = "X-role") String role) {
+        return enrollmentService.updateEnrollment(enrollmentId, enrollmentRequestDto, userId);
     }
 
     @DeleteMapping("/{enrollmentId}")
-    public void deleteEnrollment() {
-
+    public void deleteEnrollment(@PathVariable Long enrollmentId, @RequestParam String deleteBy) {
+        enrollmentService.deleteEnrollment(enrollmentId, deleteBy);
     }
 
     @DeleteMapping("/{enrollmentId}/{lectureId}")
-    public void deleteDetailsEnrollment() {
-
+    public void deleteDetailsEnrollment(@PathVariable Long enrollmentId,
+                                        @PathVariable Long lectureId) {
+        enrollmentService.deleteDetailsEnrollment(enrollmentId, lectureId);
     }
 }

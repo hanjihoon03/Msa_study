@@ -1,6 +1,7 @@
 package com.spring_cloud.study.client.enrollment.model;
 
 import com.spring_cloud.study.client.enrollment.presentation.dto.EnrollmentRequestDto;
+import com.spring_cloud.study.client.enrollment.presentation.dto.EnrollmentResponseDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -47,5 +48,30 @@ public class Enrollment {
                 .enrollmentLectureIds(requestDto.getEnrollmentLectureIds())
                 .createBy(userId)
                 .build();
+    }
+
+    public EnrollmentResponseDto toResponseDto() {
+        return new EnrollmentResponseDto(
+                this.id,
+                this.enrollmentLectureIds,
+                this.createAt,
+                this.createBy,
+                this.updateAt,
+                this.updateBy);
+    }
+
+    public void updateEnrollment(EnrollmentRequestDto enrollmentRequestDto, Long userId) {
+        this.enrollmentLectureIds = enrollmentRequestDto.getEnrollmentLectureIds();
+        this.updateAt = LocalDateTime.now();
+        this.updateBy = userId;
+    }
+
+    public void deleteEnrollment(String deleteBy) {
+        this.deleteAt = LocalDateTime.now();
+        this.deleteBy = deleteBy;
+    }
+
+    public void deleteDetailsEnrollment(Long lectureId) {
+        this.enrollmentLectureIds.removeIf(id -> id.equals(lectureId));
     }
 }

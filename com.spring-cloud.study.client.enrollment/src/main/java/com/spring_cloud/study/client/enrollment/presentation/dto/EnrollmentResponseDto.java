@@ -33,4 +33,5 @@ public class EnrollmentResponseDto {
         this.updateAt = enrollment.getUpdateAt();
         this.updateBy = enrollment.getUpdateBy();
     }
+
 }

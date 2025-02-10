@@ -13,6 +13,4 @@ import java.util.List;
 @AllArgsConstructor
 public class EnrollmentSearchDto {
     private List<Long> enrollmentLectureIds;
-    private String sortBy;
-    private Pageable pageable;
 }

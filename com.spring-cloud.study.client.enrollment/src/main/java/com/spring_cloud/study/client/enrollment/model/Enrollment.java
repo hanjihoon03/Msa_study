@@ -1,5 +1,6 @@
 package com.spring_cloud.study.client.enrollment.model;
 
+import com.spring_cloud.study.client.enrollment.presentation.dto.EnrollmentRequestDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -39,5 +40,12 @@ public class Enrollment {
     @PreUpdate
     protected void onUpdate() {
         updateAt = LocalDateTime.now();
+    }
+
+    public static Enrollment saveEnrollment(EnrollmentRequestDto requestDto, Long userId) {
+        return Enrollment.builder()
+                .enrollmentLectureIds(requestDto.getEnrollmentLectureIds())
+                .createBy(userId)
+                .build();
     }
 }

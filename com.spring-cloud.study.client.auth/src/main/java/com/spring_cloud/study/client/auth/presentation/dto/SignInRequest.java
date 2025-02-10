@@ -1,4 +1,4 @@
-package com.spring_cloud.study.client.auth.model.dto;
+package com.spring_cloud.study.client.auth.presentation.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

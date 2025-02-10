@@ -3,6 +3,7 @@ package com.spring_cloud.study.client.enrollment.model.repository;
 import com.spring_cloud.study.client.enrollment.model.Enrollment;
 import com.spring_cloud.study.client.enrollment.presentation.dto.EnrollmentRequestDto;
 import com.spring_cloud.study.client.enrollment.presentation.dto.EnrollmentResponseDto;
+import com.spring_cloud.study.client.enrollment.presentation.dto.EnrollmentSearchDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -14,6 +15,6 @@ public interface EnrollmentRepository {
 
     Optional<Enrollment> findById(Long enrollmentId);
 
-    Page<EnrollmentResponseDto> searchEnrollment(EnrollmentRequestDto enrollmentRequestDto, Pageable pageable);
+    Page<EnrollmentResponseDto> searchEnrollment(EnrollmentSearchDto enrollmentSearchDto, Pageable pageable, Long userId);
 
 }

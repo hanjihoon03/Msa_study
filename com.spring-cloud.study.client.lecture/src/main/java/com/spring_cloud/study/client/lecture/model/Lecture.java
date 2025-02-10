@@ -1,9 +1,9 @@
 package com.spring_cloud.study.client.lecture.model;
 
+import com.spring_cloud.study.client.lecture.presentation.dto.LectureRequestDto;
+import com.spring_cloud.study.client.lecture.presentation.dto.LectureResponseDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder(access = AccessLevel.PROTECTED)
 @Table(name = "lectures")
 public class Lecture {
 
@@ -24,10 +25,12 @@ public class Lecture {
     //강사 이름
     private String instructor;
 
+    private int price;
+
     private LocalDateTime createAt;
-    private String createBy;
+    private Long createBy;
     private LocalDateTime updateAt;
-    private String updateBy;
+    private Long updateBy;
     private LocalDateTime deleteAt;
     private String deleteBy;
 
@@ -42,5 +45,43 @@ public class Lecture {
         updateAt = LocalDateTime.now();
     }
 
+    public static Lecture createLecture(LectureRequestDto lectureRequestDto, Long userId) {
+        return Lecture.builder()
+                .title(lectureRequestDto.getTitle())
+                .description(lectureRequestDto.getDescription())
+                .instructor(lectureRequestDto.getInstructor())
+                .price(lectureRequestDto.getPrice())
+                .createBy(userId)
+                .build();
+    }
+
+    public LectureResponseDto toResponseDto() {
+        return new LectureResponseDto(
+                this.id,
+                this.title,
+                this.description,
+                this.instructor,
+                this.createAt,
+                this.createBy,
+                this.updateAt,
+                this.updateBy,
+                this.deleteAt,
+                this.deleteBy
+        );
+    }
+
+    public void updateLecture(LectureRequestDto lectureRequestDto, Long userId) {
+        this.title = lectureRequestDto.getTitle();
+        this.description = lectureRequestDto.getDescription();
+        this.instructor = lectureRequestDto.getInstructor();
+        this.price = lectureRequestDto.getPrice();
+        this.updateAt = LocalDateTime.now();
+        this.updateBy = userId;
+    }
+
+    public void deleteLecture(String deleteBy) {
+        this.deleteAt = LocalDateTime.now();
+        this.deleteBy = deleteBy;
+    }
 
 }

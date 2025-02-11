@@ -10,9 +10,9 @@ spring:
     gateway:
       routes:  # Spring Cloud Gateway의 라우팅 설정
         - id: lecture-service  # 라우트 식별자
-          uri: lb://lectures-service
+          uri: lb://lecture-service
           predicates:
-            - Path=/lecture/**
+            - Path=/lectures/**
         - id: enrollment-service
           uri: lb://enrollment-service
           predicates:

@@ -36,8 +36,7 @@ public class JpaLectureRepositoryImpl implements JpaLectureRepositoryCustom {
         JPAQuery<Lecture> jpaQuery = query(lecture, lectureSearchDto)
                 .orderBy(orderSpecifierList.toArray(new OrderSpecifier[0]))
                 .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetchAll();
+                .limit(pageable.getPageSize());
 
         List<Lecture> fetch = jpaQuery.fetch();
 
@@ -109,6 +108,8 @@ public class JpaLectureRepositoryImpl implements JpaLectureRepositoryCustom {
                 }
 
             }
+        }else {
+            orderSpecifiers.add(new OrderSpecifier<>(Order.DESC, lecture.createAt));
         }
 
         return orderSpecifiers;

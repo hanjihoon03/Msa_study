@@ -20,7 +20,7 @@ public class EnrollmentController {
 
     @PostMapping
     public EnrollmentResponseDto saveEnrollment(@RequestBody EnrollmentRequestDto enrollmentRequestDto,
-                                                @RequestHeader(value = "X-User_Id") Long userId,
+                                                @RequestHeader(value = "X-User-Id") Long userId,
                                                 @RequestHeader(value = "X-role") String role) {
         return enrollmentService.saveEnrollment(enrollmentRequestDto, userId);
     }
@@ -28,7 +28,7 @@ public class EnrollmentController {
     @GetMapping
     public Page<EnrollmentResponseDto> searchEnrollment(EnrollmentSearchDto enrollmentSearchDto,
                                                         Pageable pageable,
-                                                        @RequestHeader(value = "X-User_Id") Long userId,
+                                                        @RequestHeader(value = "X-User-Id") Long userId,
                                                         @RequestHeader(value = "X-role") String role) {
         return enrollmentService.searchEnrollment(enrollmentSearchDto, pageable, userId);
     }
@@ -39,21 +39,21 @@ public class EnrollmentController {
     }
 
     @PutMapping("/{enrollmentId}")
-    public EnrollmentResponseDto updateEnrollment(@PathVariable Long enrollmentId,
+    public EnrollmentResponseDto updateEnrollment(@PathVariable("enrollmentId") Long enrollmentId,
                                                   @RequestBody EnrollmentRequestDto enrollmentRequestDto,
-                                                  @RequestHeader(value = "X-User_Id") Long userId,
+                                                  @RequestHeader(value = "X-User-Id") Long userId,
                                                   @RequestHeader(value = "X-role") String role) {
         return enrollmentService.updateEnrollment(enrollmentId, enrollmentRequestDto, userId);
     }
 
     @DeleteMapping("/{enrollmentId}")
-    public void deleteEnrollment(@PathVariable Long enrollmentId, @RequestParam String deleteBy) {
+    public void deleteEnrollment(@PathVariable("enrollmentId") Long enrollmentId, @RequestParam String deleteBy) {
         enrollmentService.deleteEnrollment(enrollmentId, deleteBy);
     }
 
     @DeleteMapping("/{enrollmentId}/{lectureId}")
-    public void deleteDetailsEnrollment(@PathVariable Long enrollmentId,
-                                        @PathVariable Long lectureId) {
+    public void deleteDetailsEnrollment(@PathVariable("enrollmentId") Long enrollmentId,
+                                        @PathVariable("lectureId") Long lectureId) {
         enrollmentService.deleteDetailsEnrollment(enrollmentId, lectureId);
     }
 }
